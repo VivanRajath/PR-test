@@ -1,36 +1,36 @@
-# Simple ATM Machine Simulation
+import random
+import time
 
-balance = 5000
+class WeatherEngine:
+    def __init__(self):
+        self.temperature = 25
+        self.humidity = 50
+        self.wind_speed = 5
 
-print("===== Welcome to Python ATM =====")
+    def simulate_change(self):
+        self.temperature += random.uniform(-1.5, 1.5)
+        self.humidity += random.uniform(-3, 3)
+        self.wind_speed += random.uniform(-1, 1)
 
-while True:
-    print("\n1. Check Balance")
-    print("2. Deposit Money")
-    print("3. Withdraw Money")
-    print("4. Exit")
+        self.temperature = max(min(self.temperature, 50), -10)
+        self.humidity = max(min(self.humidity, 100), 0)
+        self.wind_speed = max(self.wind_speed, 0)
 
-    choice = int(input("Choose an option: "))
+    def report(self):
+        return {
+            "Temperature": round(self.temperature, 2),
+            "Humidity": round(self.humidity, 2),
+            "Wind Speed": round(self.wind_speed, 2)
+        }
 
-    if choice == 1:
-        print("Your Balance:", balance)
+def main():
+    engine = WeatherEngine()
 
-    elif choice == 2:
-        amount = float(input("Enter amount to deposit: "))
-        balance += amount
-        print("Deposit successful. New Balance:", balance)
+    print("Weather Simulation Started\n")
+    for i in range(50):
+        engine.simulate_change()
+        print(f"Cycle {i+1}: {engine.report()}")
+        time.sleep(0.2)
 
-    elif choice == 3:
-        amount = float(input("Enter amount to withdraw: "))
-        if amount <= balance:
-            balance -= amount
-            print("Withdrawal successful. Remaining Balance:", balance)
-        else:
-            print("Insufficient balance")
-
-    elif choice == 4:
-        print("Thank you for using Python ATM")
-        break
-
-    else:
-        print("Invalid choice")
+if __name__ == "__main__":
+    main()
